@@ -1,20 +1,22 @@
 "use client"
+import { useState, useEffect } from 'react';
+import EditorJsParser from 'editorjs-to-html';
 
-export default function OutputFromEdit({data}){
+const editorParser = new EditorJsParser({
+  // Configuration for the Editor.js tools
+});
+
+const EditorViewer = ({ data }) => {
+  const [html, setHtml] = useState('');
+
+  useEffect(() => {
+    const parsedHtml = editorParser?.parse(data);
+    setHtml(parsedHtml);
+  }, [data]);
+
   return (
-    <div>
-      {
-        data?.map((item,index)=>{
-          if (item?.type === "paragraph"){
-            return (
-              <p key={index}>{item?.data?.text}</p>
-            )
-          }
-          else{
-            return <h1>not</h1>
-          }
-        })
-      }
-    </div>
-  )
-}
+    <div dangerouslySetInnerHTML={{ __html: html }} />
+  );
+};
+
+export default EditorViewer;

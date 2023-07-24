@@ -16,7 +16,7 @@ export default function Article(){
     <div className="pt-[50px] text-[white]">
       <div className="container">
         <h1 className="text-3xl">ບົດຄວາມ</h1>
-        <OutputFromEdit data={data.blocks} />
+        <OutputFromEdit data={data} />
       </div>
     </div>
   )

@@ -7,7 +7,7 @@ const nextConfig = {
         hostname:'cdn1.iconfinder.com'
       }
     ]
-  }
+  },
 }
 
 module.exports = nextConfig

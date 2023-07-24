@@ -11,8 +11,8 @@ export default function Navigation(){
         Sunfolio
       </div>
       <div >
-        <Link style={{'margin':'0 20px','color':primaryColor,'textDecoration':'none'}} href="/">Portfolio</Link>
         <Link style={{'color':primaryColor,'textDecoration':'none'}} href="/contents">Article</Link>
+        <Link style={{'margin':'0 20px','color':primaryColor,'textDecoration':'none'}} href="/">AboutMe</Link>
       </div>
         </div>
       </div>
