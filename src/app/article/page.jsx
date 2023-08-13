@@ -1,4 +1,4 @@
-import OutputFromEdit from "../../../components/OutputFromEdit"
+import OutputFromEdit from "../components/OutputFromEdit"
 
 export default function Article(){
   const data = {

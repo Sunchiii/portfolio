@@ -14,5 +14,5 @@ module.exports = {
       primary:"#f7c618"
     }
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
