@@ -10,12 +10,18 @@ const EditorViewer = ({ data }) => {
   const [html, setHtml] = useState('');
 
   useEffect(() => {
-    const parsedHtml = editorParser?.parse(data);
-    setHtml(parsedHtml);
+    if (data) {
+      const parsedHtml = editorParser?.parse(data);
+      setHtml(parsedHtml);
+    }
   }, [data]);
 
+
+
   return (
-    <div dangerouslySetInnerHTML={{ __html: html }} />
+    <>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+    </>
   );
 };
 

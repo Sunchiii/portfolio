@@ -27,9 +27,9 @@ export default function About() {
         <CategorySelectTab />
         <div className="flex flex-wrap" style={{ display: initLoading ? "none" : "flex" }}>
           {
-            data?.map(() => (
-              <Link href="/article">
-                <ArticleCard />
+            data?.map(e=> (
+              <Link href={`/article/${e?.id}`} key={e?.id}>
+                <ArticleCard title={e?.title} description={e?.description} created_at={e?.created_at} article_type={e?.article_type} />
               </Link>
             ))
           }
