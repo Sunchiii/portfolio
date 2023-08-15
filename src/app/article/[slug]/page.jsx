@@ -13,6 +13,7 @@ export default function Article(){
     if (res !== Error){
       setData(res?.data)
       setAllData(res)
+      console.log(res)
       return
     }
     console.log("error")
@@ -21,22 +22,12 @@ export default function Article(){
   useEffect(()=>{
     CallApi()
   },[])
-  const fakedata = {
-    blocks:[
-      {
-        id:"mhTl6ghSkV",
-        type:"paragraph",
-        data:{
-          text:"Hey. Meet the new Editor. On this picture you can see it in action. Then, try a demo 🤓"
-        }
-      }
-    ]
-  }
   return(
     <div className="pt-[100px] text-[white]">
       {data && <div className="container">
         <h1 className="text-3xl">{allData?.title}</h1>
         <p>{allData?.description}</p>
+        <img src={allData?.image_exam} alt="" />
         <OutputFromEdit data={data} />
       </div>}
     </div>

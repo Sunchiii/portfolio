@@ -3,11 +3,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import moment from 'moment'
 
-export default function ArticleCard({title,description, created_at, article_type}){
+export default function ArticleCard({title,description,image_exam, created_at, article_type}){
+  const defaultImageUrl = '/assets/images/sunchi.jpeg';
+  const imageUrl = image_exam !== "" | undefined ? image_exam : defaultImageUrl;
   return (
     <div className="w-[280px] relative m-5">
         <div className='w-full h-40 overflow-hidden'>
-        <Image className='object-cover' src="/assets/images/sunchi.jpeg" width={500} height={500} />
+        <img src={imageUrl} alt="img" />
       </div>
       <div className='bg-[white] text-[black] pb-20 p-3'>
         <p className='text-xs '>{moment(created_at).format("MMM Do YY")}</p>

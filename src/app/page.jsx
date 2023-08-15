@@ -29,7 +29,7 @@ export default function About() {
           {
             data?.map(e=> (
               <Link href={`/article/${e?.id}`} key={e?.id}>
-                <ArticleCard title={e?.title} description={e?.description} created_at={e?.created_at} article_type={e?.article_type} />
+                <ArticleCard image_exam={e?.image_exam} title={e?.title} description={e?.description} created_at={e?.created_at} article_type={e?.article_type} />
               </Link>
             ))
           }
