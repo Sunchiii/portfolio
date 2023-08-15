@@ -7,10 +7,12 @@ import {useParams} from 'next/navigation'
 export default function Article(){
   const params = useParams()
   const [data,setData] = useState({blocks:[]})
+  const [allData,setAllData] = useState({})
   async function CallApi(){
     const res = await GetArticle(params?.slug)
     if (res !== Error){
       setData(res?.data)
+      setAllData(res)
       return
     }
     console.log("error")
@@ -31,11 +33,12 @@ export default function Article(){
     ]
   }
   return(
-    <div className="pt-[50px] text-[white]">
-      <div className="container">
-        <h1 className="text-3xl">ບົດຄວາມ</h1>
-        {data && <OutputFromEdit data={data} />}
-      </div>
+    <div className="pt-[100px] text-[white]">
+      {data && <div className="container">
+        <h1 className="text-3xl">{allData?.title}</h1>
+        <p>{allData?.description}</p>
+        <OutputFromEdit data={data} />
+      </div>}
     </div>
   )
 }
