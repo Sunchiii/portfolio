@@ -4,7 +4,7 @@ import { primaryColor } from "@/app/constants"
 
 export default function Navigation(){
   return (
-    <div className="Navbar bg-[black]">
+    <div className="Navbar">
       <div className="container">
         <div className="navbar">
       <div>

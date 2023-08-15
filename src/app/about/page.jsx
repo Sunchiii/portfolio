@@ -1,7 +1,7 @@
 import { primaryColor } from "../constants"
 import Image from 'next/image'
-import Timeline from "../../../components/timeline"
-import Typing from "../../../components/typing"
+import Timeline from "../components/timeline"
+import Typing from "../components/typing"
 import Link from 'next/link'
 
 

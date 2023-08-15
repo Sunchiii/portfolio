@@ -27,7 +27,7 @@ export default function About() {
         <CategorySelectTab />
         <div className="flex flex-wrap" style={{ display: initLoading ? "none" : "flex" }}>
           {
-            data?.map(()=> (
+            data?.map(() => (
               <Link href="/article">
                 <ArticleCard />
               </Link>
@@ -38,6 +38,15 @@ export default function About() {
           display: initLoading ? "flex" : "none"
         }} className="flex justify-center items-center h-[600px] w-full">
           <span className="loading loading-infinity loading-lg scale-[3]"></span>
+        </div>
+        <div className="flex justify-center py-5">
+          <div className="join inline">
+            <button className="join-item btn">«</button>
+            <button className="join-item btn">20</button>
+            <button className="join-item btn">21</button>
+            <button className="join-item btn">22</button>
+            <button className="join-item btn">»</button>
+          </div>
         </div>
       </div>
     </div>
