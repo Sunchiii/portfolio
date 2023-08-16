@@ -5,19 +5,23 @@ import SearchBar from "./components/serachBar"
 import Link from 'next/link'
 import ArticleCard from "./components/ArticleCard"
 import { GetArticles } from "@/api/article"
+import {useSearchParams, useRouter, usePathname} from "next/navigation"
+import { createQueryString } from "@/api"
 
 export default function About() {
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
   const [data, setData] = useState([])
   const [initLoading, setInitLoading] = useState(true)
 
   async function CallApi() {
-    const res = await GetArticles(12, 1)
+    const res = await GetArticles(10,1)
     setData(res?.articles)
     setInitLoading(false)
   }
   useEffect(() => {
     CallApi()
-    console.log(data)
   }, [])
   return (
     <div style={{ "paddingTop": '50px', }}>
@@ -42,9 +46,11 @@ export default function About() {
         <div className="flex justify-center py-5">
           <div className="join inline">
             <button className="join-item btn">«</button>
-            <button className="join-item btn">20</button>
-            <button className="join-item btn">21</button>
-            <button className="join-item btn">22</button>
+            <button onClick={()=>{
+              router.push(pathname + "?"+createQueryString("page","1")+createQueryString("limit","10"))
+            }} className="join-item btn">1</button>
+            <button className="join-item btn">2</button>
+            <button className="join-item btn">3</button>
             <button className="join-item btn">»</button>
           </div>
         </div>
