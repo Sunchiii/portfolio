@@ -1,7 +1,7 @@
 "use client"
 import { useState,useEffect } from "react"
 import OutputFromEdit from "../../components/OutputFromEdit"
-import { GetArticle } from "@/api/article"
+import { GetArticle } from "../../api/article"
 import {useParams} from 'next/navigation'
 
 export default function Article(){

@@ -4,14 +4,14 @@ import CategorySelectTab from "./components/categoryTab"
 import SearchBar from "./components/serachBar"
 import Link from 'next/link'
 import ArticleCard from "./components/ArticleCard"
-import { GetArticles } from "@/api/article"
+import { GetArticles } from "./api/article"
 import {useSearchParams, useRouter} from "next/navigation"
 
 export default function About() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [data, setData] = useState([])
-  const [allData,setAllData] = useState()
+  const [allData,setAllData] = useState({articles:[],meta:{}})
   const [initLoading, setInitLoading] = useState(true)
 
   const createQueryString = useCallback(
@@ -28,21 +28,30 @@ export default function About() {
     [searchParams]
   )
   async function CallApi() {
-    const res = await GetArticles(parseInt(searchParams.get("limit")),parseInt(searchParams.get("page")))
-    setData(res?.articles)
+    let limit = searchParams.get("limit")
+    let page = searchParams.get("page")
+    const res = await GetArticles(parseInt(limit),parseInt(page))
+    setAllData(res)
+    setInitLoading(false)
+  }
+  async function PageCallApi(_page,_limit) {
+    const res = await GetArticles(_limit,_page)
     setAllData(res)
     setInitLoading(false)
   }
   useEffect(() => {
     CallApi()
   }, [])
+  useEffect(()=>{
+    setData(allData.articles)
+  },[allData])
   return (
     <div style={{ "paddingTop": '50px', }}>
       <div className="container">
         <h1 className="text-2xl text-[white]">ບົດຄວາມທັງຫມົດ</h1>
         <SearchBar />
         <CategorySelectTab />
-        {allData && <div className="flex flex-wrap" style={{ display: initLoading ? "none" : "flex" }}>
+        {data && <div className="flex flex-wrap" style={{ display: initLoading ? "none" : "flex" }}>
           {
             data?.length === 0 ? <div className="h-[500px] w-full text-center pt-24">has no data in this page</div>:
             data?.map(e=> (
@@ -65,8 +74,8 @@ export default function About() {
               Array.from({length:allData?.meta?.page_count}, (_, i) => i + 1).map((p)=>(
                 <button key={p} onClick={()=>{
                   router.push("?"+createQueryString("page",p)+"&"+createQueryString("limit","10"))
-                  CallApi()
-                }} className="join-item btn">{p}</button> 
+                  PageCallApi(p,10)
+                }} className="join-item btn">{p}</button>
               ))
             }
             <button className="join-item btn">»</button>

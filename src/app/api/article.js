@@ -1,5 +1,6 @@
 import axios from "axios"
-import { API_URL } from "."
+
+var API_URL = "http://localhost:8080/v1";
 
 export const GetArticles = async (limit,page) => {
     const url = `${API_URL}/articles?page=${page}&limit=${limit}`
