@@ -2,13 +2,14 @@
 import { useState } from "react";
 
 const categories = [
+  "All",
   "Programming Lang",
   "Tips",
   "Story",
   "Dev Tools",
 ];
 
-const CategorySelectTab = () => {
+const CategorySelectTab = ({onType}) => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [linePosition, setLinePosition] = useState(0);
 
@@ -16,6 +17,13 @@ const CategorySelectTab = () => {
     setSelectedCategory(category);
     setLinePosition(index);
     // do something with the selected category
+    let type = ""
+    if (index == 0) type = "all"
+    else if (index == 1) type = "program-lang"
+    else if (index == 2) type = "tips"
+    else if (index == 3) type = "story"
+    else if (index == 4) type = "dev-tool"
+    onType(type)
   };
 
   return (
@@ -29,7 +37,9 @@ const CategorySelectTab = () => {
                 ? "bg-blue-500 text-white"
                 : "text-gray-700 hover:bg-gray-200"
             }`}
-            onClick={() => handleCategoryChange(category, index)}
+            onClick={() => {
+              handleCategoryChange(category, index)
+            }}
             onMouseEnter={() => setLinePosition(index)}
             onMouseLeave={() => setLinePosition(selectedCategory)}
           >

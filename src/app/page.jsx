@@ -13,6 +13,7 @@ export default function About() {
   const [data, setData] = useState([])
   const [allData, setAllData] = useState({ articles: [], meta: {} })
   const [initLoading, setInitLoading] = useState(true)
+  const [type, setType] = useState("")
 
   const createQueryString = useCallback(
     (name, value) => {
@@ -28,6 +29,7 @@ export default function About() {
     [searchParams]
   )
   async function CallApi() {
+    setInitLoading(true)
     let limit = searchParams.get("limit")
     let page = searchParams.get("page")
     const res = await GetArticles(parseInt(limit), parseInt(page))
@@ -40,18 +42,25 @@ export default function About() {
     setAllData(res)
     setInitLoading(false)
   }
+
+  function ClickType(type){
+    console.log(type)
+  }
   useEffect(() => {
     CallApi()
   }, [])
   useEffect(() => {
     setData(allData.articles)
   }, [allData])
+  useEffect(()=>{
+    console.log(type)
+  },[type])
   return (
     <div style={{ "paddingTop": '50px', }}>
       <div className="container">
         <h1 className="text-2xl text-[white]">ບົດຄວາມທັງຫມົດ</h1>
         <SearchBar />
-        <CategorySelectTab />
+        <CategorySelectTab onType={ClickType} />
         {data && <div className="flex flex-wrap" style={{ display: initLoading ? "none" : "flex" }}>
           {
             data?.length === 0 ? <div className="h-[500px] w-full text-center pt-24">has no data in this page</div> :
