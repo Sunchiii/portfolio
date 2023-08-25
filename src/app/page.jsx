@@ -76,6 +76,20 @@ export default function About() {
       <div className="container">
         <h1 className="text-2xl text-[white]">ບົດຄວາມທັງຫມົດ</h1>
         <SearchBar />
+        <div class="flex items-center justify-center mt-5">
+          <div class="w-1/2">
+            <div class="relative">
+              <input
+                type="text"
+                class="px-4 py-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Search"
+              />
+              <button class="absolute right-0 top-0 px-4 py-2 bg-blue-500 text-white rounded-r-md">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
         <CategorySelectTab onType={ClickType} nowValue={cateIndex} />
         {data && <div className="flex flex-wrap" style={{ display: initLoading ? "none" : "flex" }}>
           {
