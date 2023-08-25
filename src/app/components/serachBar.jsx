@@ -61,13 +61,13 @@ export default function SearchBar() {
               <div className="bg-[white] inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 text-[black]"
                 >
                   ຄົ້ນຫາບົດຄວາມຈາກຫົວຂໍ້
                 </Dialog.Title>
                 <div className="mt-2">
                   <input
-                    className="w-full px-4 py-2 text-gray-700 bg-gray-200 rounded outline-none"
+                    className="w-full px-4 py-2 text-[black] bg-[white] rounded outline-none"
                     type="text"
                     placeholder="Search..."
                   />
@@ -75,7 +75,7 @@ export default function SearchBar() {
                 <div className="mt-4">
                   <button
                     type="button"
-                    className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
+                    className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-[black] bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500"
                     onClick={closeSearchBar}
                   >
                     ຄົ້ນຫາ
