@@ -28,41 +28,40 @@ export default function About() {
     },
     [searchParams]
   )
-  
+
   async function CallApi() {
     setInitLoading(true)
     let limit = searchParams.get("limit")
     let page = searchParams.get("page")
-    let article_type = "" 
-    if (searchParams.has("article-type") === true){
+    let article_type = ""
+    if (searchParams.has("article-type") === true) {
       article_type = searchParams.get("article-type")
-    }else{
+    } else {
       article_type = "all"
     }
     setCateIndex(article_type)
-    const res = await GetArticles(limit, page,article_type)
+    const res = await GetArticles(limit, page, article_type)
     setAllData(res)
     setInitLoading(false)
   }
   async function PageCallApi(_page, _limit) {
     setInitLoading(true)
-    let article_type = "" 
-    if (searchParams.has("article-type")){
+    let article_type = ""
+    if (searchParams.has("article-type")) {
       article_type = searchParams.get("article-type")
-    }else{
+    } else {
       article_type = "all"
     }
-    const res = await GetArticles(_limit, _page,article_type)
+    const res = await GetArticles(_limit, _page, article_type)
     setAllData(res)
     setInitLoading(false)
   }
 
-  async function ClickType(type){
+  async function ClickType(type) {
     setInitLoading(true)
     let limit = searchParams.get("limit")
-    let page = searchParams.get("page")
-    router.push("?" + createQueryString("page", page) + "&" + createQueryString("limit", limit)+"&"+createQueryString("article-type", type))
-    const res = await GetArticles(limit,page,type)
+    router.push("?" + createQueryString("page", "1") + "&" + createQueryString("limit", limit) + "&" + createQueryString("article-type", type))
+    const res = await GetArticles(limit, 1, type)
     setAllData(res)
     setInitLoading(false)
   }
@@ -95,14 +94,14 @@ export default function About() {
         </div>
         <div className="flex justify-center py-5 mt-36">
           <div className="join inline">
-            <button onClick={()=>{
-                                    let type = ""
-                                    if (searchParams.has("article-type")){
-                                      type = searchParams.get("article-type")
-                                    }else{
-                                      type = "all"
-                                    }
-              router.push("?" + createQueryString("page", 1) + "&" + createQueryString("limit", "10")+"&"+createQueryString("article-type",type))
+            <button onClick={() => {
+              let type = ""
+              if (searchParams.has("article-type")) {
+                type = searchParams.get("article-type")
+              } else {
+                type = "all"
+              }
+              router.push("?" + createQueryString("page", 1) + "&" + createQueryString("limit", "10") + "&" + createQueryString("article-type", type))
               PageCallApi(1, 10)
             }} className="join-item btn">First page</button>
             {
@@ -110,39 +109,39 @@ export default function About() {
               Array.from({ length: allData?.meta?.page_count }, (_, i) => i + 1).map((p) => {
                 if (p >= 1 && p <= 3) {
                   return (
-                    <button style={{opacity: p == searchParams.get("page") ? 0.7 : 1}} key={p} onClick={() => {
+                    <button style={{ opacity: p == searchParams.get("page") ? 0.7 : 1 }} key={p} onClick={() => {
                       let type = ""
-                      if (searchParams.has("article-type")){
+                      if (searchParams.has("article-type")) {
                         type = searchParams.get("article-type")
-                      }else{
+                      } else {
                         type = "all"
                       }
-                      router.push("?" + createQueryString("page", p) + "&" + createQueryString("limit", "10")+"&"+createQueryString("article-type",type))
+                      router.push("?" + createQueryString("page", p) + "&" + createQueryString("limit", "10") + "&" + createQueryString("article-type", type))
                       PageCallApi(p, 10)
                     }} className="join-item btn">{p}</button>
                   )
                 }
-                else if (p >= length-3 && p <= length){
+                else if (p >= length - 3 && p <= length) {
                   return (
-                    <button style={{opacity: p == searchParams.get("page") ? 0.7 : 1}} key={p} onClick={() => {
+                    <button style={{ opacity: p == searchParams.get("page") ? 0.7 : 1 }} key={p} onClick={() => {
                       router.push("?" + createQueryString("page", p) + "&" + createQueryString("limit", "10"))
                       PageCallApi(p, 10)
                     }} className="join-item btn">{p}</button>
                   )
                 }
-                else{
+                else {
                   return
                 }
               })
             }
-            <button onClick={()=>{
-                      let type = ""
-                      if (searchParams.has("article-type")){
-                        type = searchParams.get("article-type")
-                      }else{
-                        type = "all"
-                      }
-              router.push("?" + createQueryString("page", allData?.meta?.page_count) + "&" + createQueryString("limit", "10")+"&"+createQueryString("article-type",type))
+            <button onClick={() => {
+              let type = ""
+              if (searchParams.has("article-type")) {
+                type = searchParams.get("article-type")
+              } else {
+                type = "all"
+              }
+              router.push("?" + createQueryString("page", allData?.meta?.page_count) + "&" + createQueryString("limit", "10") + "&" + createQueryString("article-type", type))
               PageCallApi(allData?.meta?.page_count, 10)
             }} className="join-item btn">Last page</button>
           </div>
