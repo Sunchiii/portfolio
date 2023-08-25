@@ -1,5 +1,6 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation"
 
 const categories = [
   "All",
@@ -9,7 +10,8 @@ const categories = [
   "Dev Tools",
 ];
 
-const CategorySelectTab = ({onType}) => {
+const CategorySelectTab = ({onType, nowValue}) => {
+  const searchParams = useSearchParams()
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [linePosition, setLinePosition] = useState(0);
 
@@ -26,10 +28,31 @@ const CategorySelectTab = ({onType}) => {
     onType(type)
   };
 
+  function convertTypeToIndex(nowValue){
+    if(nowValue === "all") return 0
+    else if(nowValue === "program-lang") return 1
+    else if(nowValue === "tips") return 2
+    else if(nowValue === "story") return 3
+    else if(nowValue === "dev-tool") return 4
+    else return 0
+  }
+
+  useEffect(()=>{
+    let type = ""
+    if (searchParams.has("article-type")){
+      type = searchParams.get("article-type")
+    }else{
+      type = "all"
+    }
+    let initIndex = convertTypeToIndex(type)
+    setLinePosition(initIndex)
+    setSelectedCategory(categories[initIndex])
+  },[])
+
   return (
     <div className="relative flex flex-row justify-center mt-4">
       <div className="relative flex flex-row bg-white rounded-lg shadow-lg">
-        {categories.map((category, index) => (
+        {nowValue && categories.map((category, index) => (
           <button
             key={category}
             className={`relative px-6 py-4 m-0 p-0 text-[white] ${

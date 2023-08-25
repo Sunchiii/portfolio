@@ -13,7 +13,7 @@ export default function About() {
   const [data, setData] = useState([])
   const [allData, setAllData] = useState({ articles: [], meta: {} })
   const [initLoading, setInitLoading] = useState(true)
-  const [type, setType] = useState("")
+  const [cateIndex, setCateIndex] = useState("all")
 
   const createQueryString = useCallback(
     (name, value) => {
@@ -28,23 +28,43 @@ export default function About() {
     },
     [searchParams]
   )
+  
   async function CallApi() {
     setInitLoading(true)
     let limit = searchParams.get("limit")
     let page = searchParams.get("page")
-    const res = await GetArticles(parseInt(limit), parseInt(page))
+    let article_type = "" 
+    if (searchParams.has("article-type") === true){
+      article_type = searchParams.get("article-type")
+    }else{
+      article_type = "all"
+    }
+    setCateIndex(article_type)
+    const res = await GetArticles(limit, page,article_type)
     setAllData(res)
     setInitLoading(false)
   }
   async function PageCallApi(_page, _limit) {
     setInitLoading(true)
-    const res = await GetArticles(_limit, _page)
+    let article_type = "" 
+    if (searchParams.has("article-type")){
+      article_type = searchParams.get("article-type")
+    }else{
+      article_type = "all"
+    }
+    const res = await GetArticles(_limit, _page,article_type)
     setAllData(res)
     setInitLoading(false)
   }
 
-  function ClickType(type){
-    console.log(type)
+  async function ClickType(type){
+    setInitLoading(true)
+    let limit = searchParams.get("limit")
+    let page = searchParams.get("page")
+    router.push("?" + createQueryString("page", page) + "&" + createQueryString("limit", limit)+"&"+createQueryString("article-type", type))
+    const res = await GetArticles(limit,page,type)
+    setAllData(res)
+    setInitLoading(false)
   }
   useEffect(() => {
     CallApi()
@@ -52,15 +72,12 @@ export default function About() {
   useEffect(() => {
     setData(allData.articles)
   }, [allData])
-  useEffect(()=>{
-    console.log(type)
-  },[type])
   return (
     <div style={{ "paddingTop": '50px', }}>
       <div className="container">
         <h1 className="text-2xl text-[white]">ບົດຄວາມທັງຫມົດ</h1>
         <SearchBar />
-        <CategorySelectTab onType={ClickType} />
+        <CategorySelectTab onType={ClickType} nowValue={cateIndex} />
         {data && <div className="flex flex-wrap" style={{ display: initLoading ? "none" : "flex" }}>
           {
             data?.length === 0 ? <div className="h-[500px] w-full text-center pt-24">has no data in this page</div> :
@@ -76,10 +93,16 @@ export default function About() {
         }} className="flex justify-center items-center h-[600px] w-full">
           <span className="loading loading-infinity loading-lg scale-[3]"></span>
         </div>
-        <div className="flex justify-center py-5">
+        <div className="flex justify-center py-5 mt-36">
           <div className="join inline">
             <button onClick={()=>{
-              router.push("?" + createQueryString("page", 1) + "&" + createQueryString("limit", "10"))
+                                    let type = ""
+                                    if (searchParams.has("article-type")){
+                                      type = searchParams.get("article-type")
+                                    }else{
+                                      type = "all"
+                                    }
+              router.push("?" + createQueryString("page", 1) + "&" + createQueryString("limit", "10")+"&"+createQueryString("article-type",type))
               PageCallApi(1, 10)
             }} className="join-item btn">First page</button>
             {
@@ -88,7 +111,13 @@ export default function About() {
                 if (p >= 1 && p <= 3) {
                   return (
                     <button style={{opacity: p == searchParams.get("page") ? 0.7 : 1}} key={p} onClick={() => {
-                      router.push("?" + createQueryString("page", p) + "&" + createQueryString("limit", "10"))
+                      let type = ""
+                      if (searchParams.has("article-type")){
+                        type = searchParams.get("article-type")
+                      }else{
+                        type = "all"
+                      }
+                      router.push("?" + createQueryString("page", p) + "&" + createQueryString("limit", "10")+"&"+createQueryString("article-type",type))
                       PageCallApi(p, 10)
                     }} className="join-item btn">{p}</button>
                   )
@@ -107,7 +136,13 @@ export default function About() {
               })
             }
             <button onClick={()=>{
-              router.push("?" + createQueryString("page", allData?.meta?.page_count) + "&" + createQueryString("limit", "10"))
+                      let type = ""
+                      if (searchParams.has("article-type")){
+                        type = searchParams.get("article-type")
+                      }else{
+                        type = "all"
+                      }
+              router.push("?" + createQueryString("page", allData?.meta?.page_count) + "&" + createQueryString("limit", "10")+"&"+createQueryString("article-type",type))
               PageCallApi(allData?.meta?.page_count, 10)
             }} className="join-item btn">Last page</button>
           </div>

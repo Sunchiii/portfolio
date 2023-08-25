@@ -2,8 +2,8 @@ import axios from "axios"
 
 var API_URL = "http://localhost:8080/v1";
 
-export const GetArticles = async (limit,page) => {
-    const url = `${API_URL}/articles?page=${page}&limit=${limit}`
+export const GetArticles = async (limit,page,type) => {
+    const url = `${API_URL}/articles?page=${page}&limit=${limit}&article_type=${type}`
     const res = await axios.get(url)
 
     if (res.status === 200 ){
